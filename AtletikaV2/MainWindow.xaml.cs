@@ -18,54 +18,63 @@ namespace Atletika
     public partial class MainWindow : Window
     {
         public ObservableCollection<Versenyzo> Versenyzok { get; set; } = new ObservableCollection<Versenyzo>();
-        private ICollectionView versenyzoView;
+        public ObservableCollection<Versenyzo> LathatoVersenyzok { get; set; } = new ObservableCollection<Versenyzo>();
+
+
+
+        //private ICollectionView versenyzoView;
 
         public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
 
-            // Gyűjtemény nézet beállítása a szűréshez
-            versenyzoView = CollectionViewSource.GetDefaultView(Versenyzok);
-            versenyzoView.Filter = SzuroFeltetel;
+            //Gyűjtemény nézet beállítása a szűréshez
+           //versenyzoView = CollectionViewSource.GetDefaultView(Versenyzok);
+            //versenyzoView.Filter = SzuroFeltetel;
 
             FrissitLetszam();
         }
 
-        private bool SzuroFeltetel(object item)
-        {
-            if (item is Versenyzo v)
-            {
-                if (cmbRekordSzuro == null || cmbRekordSzuro.SelectedItem == null) return true;
+        //private bool SzuroFeltetel(object item)
+        //{
+        //    if (item is Versenyzo v)
+        //    {
+        //        if (cmbRekordSzuro == null || cmbRekordSzuro.SelectedItem == null) return true;
 
-                string szo = ((ComboBoxItem)cmbRekordSzuro.SelectedItem).Content.ToString();
-                if (szo.Contains("OR")) return v.OR;
-                if (szo.Contains("világcsúcs")) return v.VR;
-                if (szo.Contains("Európa-csúcs")) return v.ER;
-            }
-            return true;
-        }
+        //        string szo = ((ComboBoxItem)cmbRekordSzuro.SelectedItem).Content.ToString();
+        //        if (szo.Contains("OR")) return v.OR;
+        //        if (szo.Contains("világcsúcs")) return v.VR;
+        //        if (szo.Contains("Európa-csúcs")) return v.ER;
+        //    }
+        //    return true;
+        //}
 
-        private void Szuro_Valtozott(object sender, SelectionChangedEventArgs e)
-        {
-            if (versenyzoView != null)
-            {
-                versenyzoView.Refresh();
-                FrissitLetszam();
-            }
-        }
+        //private void Szuro_Valtozott(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (versenyzoView != null)
+        //    {
+        //        versenyzoView.Refresh();
+        //        FrissitLetszam();
+        //    }
+        //}
 
         private void FrissitLetszam()
         {
             int lathato = 0;
-            if (versenyzoView != null)
+            int ossz = 0;
+            ossz = Versenyzok.Count;
+            if (LathatoVersenyzok != null)
             {
-                foreach (var item in versenyzoView)
+                foreach (Versenyzo item in LathatoVersenyzok)
                 {
                     lathato++;
                 }
             }
-            txtLetszam.Text = $"Látható: {lathato} / Összesen: {Versenyzok.Count}";
+            if (txtLetszam != null)
+            {
+                txtLetszam.Text = $"Látható: {lathato} / Összesen: {ossz}";
+            }
         }
 
         private void Regisztral_Click(object sender, RoutedEventArgs e)
@@ -173,7 +182,7 @@ namespace Atletika
 
                                 if (i < Versenyzok.Count - 1)
                                 {
-                                    sw.WriteLine(); 
+                                    sw.WriteLine();
                                 }
                             }
                         }
@@ -200,7 +209,7 @@ namespace Atletika
 
                     using (StreamReader sr = new StreamReader(ofd.FileName, Encoding.UTF8))
                     {
-                        string fejlec = sr.ReadLine(); 
+                        string fejlec = sr.ReadLine();
                         while (!sr.EndOfStream)
                         {
                             string sor = sr.ReadLine();
@@ -232,7 +241,7 @@ namespace Atletika
                         }
                     }
 
-                    
+
                     Versenyzok.Clear();
                     foreach (var v in ideiglenesLista)
                     {
@@ -248,6 +257,71 @@ namespace Atletika
                 }
             }
         }
+
+        private void Szures2(object sender, RoutedEventArgs e)
+        {
+            LathatoVersenyzok.Clear();
+            foreach (Versenyzo item in Versenyzok)
+            {
+                bool bekerul = false;
+                if(cmbRekordSzuro.SelectedIndex == 0)
+                {
+                    bekerul = true;
+                }
+                if(cmbRekordSzuro.SelectedIndex == 1)
+                {
+                    bekerul = item.OR;
+                }
+                if(cmbRekordSzuro.SelectedIndex == 2)
+                {
+                    bekerul = item.VR;
+                }
+                if(cmbRekordSzuro.SelectedIndex == 3)
+                {
+                    bekerul = item.ER;
+                }
+                if (bekerul)
+                {
+                    LathatoVersenyzok.Add(item);
+                }
+
+
+
+                
+
+                item.Versenyszam
+
+
+
+
+
+
+            }
+
+
+
+
+            foreach (var i in lvcCollection)
+            {
+                foreach (var item in Versenyzok)
+                {
+                    if
+                }
+            }
+
+
+
+
+            FrissitLetszam();
+        }
+
+
+
+
+
+
+
+
         public class Versenyzo
         {
             public int Rajtszam { get; set; }

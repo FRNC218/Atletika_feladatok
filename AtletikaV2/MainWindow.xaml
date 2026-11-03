@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Atletika"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="850" Width="1200">
     <Grid Margin="20">
@@ -95,7 +96,10 @@
                 <!-- Szűrő sáv -->
                 <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12" VerticalAlignment="Center">
                     <TextBlock Text="Eredményszűrő:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <ComboBox x:Name="cmbRekordSzuro" Width="220" Height="28" IsEditable="False" SelectionChanged="Szuro_Valtozott" SelectedIndex="0">
+                    <ComboBox x:Name="cmbRekordSzuro" Width="220" Height="28" 
+                              IsEditable="False"
+                              SelectionChanged="Szures2" 
+                              SelectedIndex="0">
                         <ComboBoxItem Content="Összes"/>
                         <ComboBoxItem Content="OR - olimpiai csúcs"/>
                         <ComboBoxItem Content="VR - világcsúcs"/>
@@ -145,7 +149,47 @@
                         <DataGridCheckBoxColumn Header="ER" Binding="{Binding ER, Mode=OneWay}" Width="80"/>
                     </DataGrid.Columns>
                 </DataGrid>
-
+                
+                
+                
+                
+                
+                <lvc:CartesianChart
+                    LegendPosition="Right"  Height="200">
+                    <lvc:CartesianChart.Series>
+                        <lvc:SeriesCollection x:Name="lvcCollection">
+                            <lvc:XamlRowSeries
+                                SeriesName="100m"
+                             />
+                            <lvc:XamlRowSeries
+                                SeriesName="200"
+                             />
+                            <lvc:XamlRowSeries
+                                SeriesName="400"
+                             />
+                            <lvc:XamlRowSeries
+                                SeriesName="800"
+                             />
+                            <lvc:XamlRowSeries
+                                SeriesName="1500"
+                             />
+                            <lvc:XamlRowSeries
+                                SeriesName="Távolugrás"
+                             />
+                            <lvc:XamlRowSeries
+                                SeriesName="Magasugrás"
+                             />
+                            <lvc:XamlRowSeries
+                                SeriesName="Súlylökés"
+                             />
+                        </lvc:SeriesCollection>
+                    </lvc:CartesianChart.Series>
+                </lvc:CartesianChart>
+                
+                
+                
+                
+                
                 <TextBlock Grid.Row="3" Text="OR = olimpiai csúcs, VR = világcsúcs, ER = Európa-csúcs" FontSize="11" Foreground="Gray" Margin="0,6,0,0"/>
             </Grid>
         </Border>
